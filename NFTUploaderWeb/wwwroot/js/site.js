@@ -7,9 +7,6 @@ const userWallet = document.getElementById('userWallet');
 const currentWalletAddress = $('#currentWalletAddress');
 
 async function init() {
-
-    var test = await detectEthereumProvider();
-
     // Check if metamask is installed
     if (typeof window.ethereum === 'undefined') {
         window.alert("Please install Metamask to connect to the blockchain.");
@@ -18,13 +15,13 @@ async function init() {
 
     ethereum = window.ethereum;
 
+    // Connect to provider
+    await ethereum.request({ method: 'eth_requestAccounts' });
+
     if (ethereum.isConnected() === false) {
         window.alert("Please connect to Metamask.");
         return;
     }
-
-    // Connect to provider
-    await ethereum.request({ method: 'eth_requestAccounts' });
 
     // Listen to account and network changes
     ethereum.on('accountsChanged', handleAccountsChanged);
@@ -68,8 +65,8 @@ async function loginWithMetaMask() {
     handleAccountsChanged(accounts);
 }
 
-function signOutOfMetaMask() {
-    handleAccountsChanged([]);
+async function signOutOfMetaMask() {
+    await handleAccountsChanged([]);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
