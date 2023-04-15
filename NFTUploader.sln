@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFTUploader", "NFTUploader\NFTUploader.csproj", "{02F10BB8-8CCB-4B5C-85B2-1BE56B853F26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFTUploaderWeb", "NFTUploaderWeb\NFTUploaderWeb.csproj", "{5A980081-E6E2-4E7B-BB06-CAE9F8DF9C93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{02F10BB8-8CCB-4B5C-85B2-1BE56B853F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02F10BB8-8CCB-4B5C-85B2-1BE56B853F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02F10BB8-8CCB-4B5C-85B2-1BE56B853F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02F10BB8-8CCB-4B5C-85B2-1BE56B853F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A980081-E6E2-4E7B-BB06-CAE9F8DF9C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A980081-E6E2-4E7B-BB06-CAE9F8DF9C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A980081-E6E2-4E7B-BB06-CAE9F8DF9C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A980081-E6E2-4E7B-BB06-CAE9F8DF9C93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
