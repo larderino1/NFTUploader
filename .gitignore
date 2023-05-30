@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /NFTUploaderWeb/wwwroot/lib
 *.json
+/NFTUploaderWeb/Contracts/Contracts.Contracts.csproj
+/.funcignore

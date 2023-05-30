@@ -1,37 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NFTUploaderWeb.Models;
+using NFTUploaderWeb.Services.EthereumService;
+using NFTUploaderWeb.Services.ImageConverter;
 
 namespace NFTUploaderWeb.Pages
 {
     public class UploadModel : PageModel
     {
-        [BindProperty]
-        public NFTModel Nft { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public NFTModelForSingle Nft { get; set; }
 
-        private readonly IWebHostEnvironment _environment;
+        private readonly IEthereumService _ethereumService;
 
-        public UploadModel(IWebHostEnvironment environment)
+        private readonly IImageConverter _imageConverter;
+
+        public UploadModel(
+            IEthereumService ethereumService,
+            IImageConverter imageConverter)
         {
-            _environment = environment;
+            _ethereumService = ethereumService;
+
+            _imageConverter = imageConverter;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                Nft = new NFTModelForSingle();
                 return Page();
             }
 
-            var filePath = Path.Combine(_environment.WebRootPath, "uploads", Nft.Image.FileName);
+            var fileBytes = await _imageConverter.ConvertIFormFileToByteArray(Nft.Token.Image);
 
-            using var stream = new FileStream(filePath, FileMode.Create);
-
-            await Nft.Image.CopyToAsync(stream);
+            await _ethereumService.UploadSingleNFTAsync(Nft, fileBytes);
 
             return RedirectToPage("/Index");
         }

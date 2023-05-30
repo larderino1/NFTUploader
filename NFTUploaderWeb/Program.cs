@@ -1,3 +1,7 @@
+using NFTUploaderWeb.Services.EthereumService;
+using NFTUploaderWeb.Services.ImageConverter;
+using NFTUploaderWeb.Services.IpfsService;
+
 namespace NFTUploaderWeb
 {
     public class Program
@@ -10,6 +14,13 @@ namespace NFTUploaderWeb
             builder.Services.AddRazorPages();
 
             builder.Services.AddCors();
+
+            builder.Services.AddHttpClient();
+
+            builder.Services
+                .AddScoped<IEthereumService, EthereumService>()
+                .AddScoped<IImageConverter, ImageConverter>()
+                .AddScoped<IIpfsService, IpfsService>();
 
             var app = builder.Build();
 

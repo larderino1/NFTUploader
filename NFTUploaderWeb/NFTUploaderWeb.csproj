@@ -8,13 +8,15 @@
 
   <ItemGroup>
     <Folder Include="Contracts\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Nethereum.Contracts" Version="4.14.0" />
+    <PackageReference Include="Nethereum.JsonRpc.RpcClient" Version="4.14.0" />
+    <PackageReference Include="Nethereum.StandardNonFungibleTokenERC721" Version="4.14.0" />
     <PackageReference Include="Nethereum.Web3" Version="4.14.0" />
   </ItemGroup>
 
