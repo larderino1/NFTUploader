@@ -5,11 +5,12 @@ namespace NFTUploaderWeb.Models
     public class TokenData
     {
         [Required]
-        public IFormFile Image { get; set; }
-
+        public string ImageName { get; set; }
         [Required]
         public string TokenTitle { get; set; }
         [Required]
         public string TokenDescription { get; set; }
+        [Required]
+        public int TokenPrice { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@page
-@model NFTUploaderWeb.Pages.UploadModel
+@model NFTUploaderWeb.Pages.UploadCollectionModel
 @{
-    ViewData["TokenTitle"] = "Upload NFT";
+    ViewData["TokenTitle"] = "Upload NFT Collection";
 }
 
 <h1>@ViewData["TokenTitle"]</h1>
@@ -11,21 +11,19 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group mb-3">
-        <label asp-for="@Model.Nft.Image" class="control-label"></label>
-        <input asp-for="@Model.Nft.Image" type="file" class="form-control-file" id="image" name="Image">
-        <span asp-validation-for="@Model.Nft.Image" class="text-danger"></span>
+        <a href="./assets/TokensData.xlsx">Download Excel Template for token data</a>
     </div>
 
     <div class="form-group mb-3">
-        <label asp-for="@Model.Nft.Token.TokenTitle"></label>
-        <input asp-for="@Model.Nft.Token.TokenTitle" class="form-control" id="title" name="Title">
-        <span asp-validation-for="@Model.Nft.Token.TokenTitle" class="text-danger"></span>
+        <label asp-for="@Model.Nft.Images" class="control-label"></label>
+        <input asp-for="@Model.Nft.Images" type="file" class="form-control-file" id="image" name="Images" accept=".gif,.jpg,.jpeg,.png" multiple>
+        <span asp-validation-for="@Model.Nft.Images" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
-        <label asp-for="@Model.Nft."></label>
-        <input asp-for="@Model.Nft.Token.TokenDescription" class="form-control" id="description" name="Description" rows="3">
-        <span asp-validation-for="@Model.Nft.Token.TokenDescription" class="text-danger"></span>
+        <label asp-for="@Model.Nft.ExcelSheet" class="control-label">Token Data</label>
+        <input asp-for="@Model.Nft.ExcelSheet" type="file" class="form-control-file" id="image" name="ExcelSheet" accept=".xls, .xlsx">
+        <span asp-validation-for="@Model.Nft.ExcelSheet" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
@@ -40,11 +38,11 @@
         <span asp-validation-for="@Model.Nft.TokenName" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-3">
         <input asp-for="@Model.Nft.CreatorAddress" type="hidden" class="form-control" name="CreatorAddress">
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary mb-3">Submit</button>
 
 </form>
 

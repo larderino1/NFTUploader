@@ -2,26 +2,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NFTUploaderWeb.Models;
 using NFTUploaderWeb.Services.EthereumService;
+using NFTUploaderWeb.Services.ExcelParserService;
 using NFTUploaderWeb.Services.ImageConverter;
 
 namespace NFTUploaderWeb.Pages
 {
-    public class UploadModel : PageModel
+    public class UploadCollectionModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
-        public NFTModelForSingle Nft { get; set; }
+        public NFTModelForBulk Nft { get; set; }
 
         private readonly IEthereumService _ethereumService;
 
-        private readonly IImageConverter _imageConverter;
+        private readonly IExcelParserService _excelParserService;
 
-        public UploadModel(
+        public UploadCollectionModel(
             IEthereumService ethereumService,
-            IImageConverter imageConverter)
+            IExcelParserService excelParserService)
         {
             _ethereumService = ethereumService;
 
-            _imageConverter = imageConverter;
+            _excelParserService = excelParserService;
         }
 
         public IActionResult OnGet()
@@ -33,17 +34,15 @@ namespace NFTUploaderWeb.Pages
         {
             if (!ModelState.IsValid)
             {
-                Nft = new NFTModelForSingle();
+                Nft = new NFTModelForBulk();
                 return Page();
             }
 
-            //var fileBytes = await _imageConverter.ConvertIFormFileToByteArray(Nft.Image);
+            //Nft.Tokens = await _excelParserService.ParseExcel(Nft.ExcelSheet, Path.GetTempPath());
 
-            //await _ethereumService.UploadSingleNFTAsync(Nft, fileBytes);
+            //await _ethereumService.UploadNftInBulkAsync(Nft);
 
-            var test = _ethereumService.GetNftByAddressAsync(Nft.CreatorAddress);
-
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Index", "OnGet", new { Nft.CreatorAddress });
         }
     }
 }

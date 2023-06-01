@@ -12,6 +12,11 @@ namespace NFTUploaderWeb.Models
         public string TokenName { get; set; }
 
         [Required]
-        public IEnumerable<TokenData> Tokens { get; set; }
+        public IEnumerable<IFormFile> Images { get; set; }
+
+        [Required]
+        public IFormFile ExcelSheet { get; set; }
+
+        public IEnumerable<TokenData> Tokens { get; set; } = new List<TokenData>();
     }
 }

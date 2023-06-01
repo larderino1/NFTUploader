@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using NFTUploaderWeb.Constants;
 using NFTUploaderWeb.Models;
 using System.Text;
@@ -9,6 +10,10 @@ namespace NFTUploaderWeb.Services.IpfsService
     {
         private readonly string _ipfsGateway;
 
+        private readonly string _encodedCredentials;
+
+        private readonly string _ipfsServiceURL;
+
         private readonly HttpClient _httpClient;
 
         public IpfsService(
@@ -17,18 +22,9 @@ namespace NFTUploaderWeb.Services.IpfsService
         {
             _ipfsGateway = config[ConfigurationConstants.InfuraIPFSGatewayEndpoint];
 
-            var ipfsServiceURL = config[ConfigurationConstants.InfuraIPFSEndpoint];
+            _ipfsServiceURL = config[ConfigurationConstants.InfuraIPFSEndpoint];
 
-            var key = config[ConfigurationConstants.InfuraIPFSKey];
-            var secret = config[ConfigurationConstants.InfuraIPFSSecret];
-
-            var byteArray = Encoding.UTF8.GetBytes($"{key}:{secret}");
-
-            var encodedCredentials = Convert.ToBase64String(byteArray);
-
-            _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri(ipfsServiceURL);
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedCredentials}");
+            _httpClient = httpClientFactory.CreateClient("InfuraIPFS");
         }
 
         public async Task<string> AddImageAndMetadataToInfuraIPFS(byte[] file,
@@ -41,7 +37,7 @@ namespace NFTUploaderWeb.Services.IpfsService
                 { new ByteArrayContent(file), "Image", imageFileName }
             };
 
-            var imageAdditionResponse = await _httpClient.PostAsync("/add", imageContent);
+            var imageAdditionResponse = await _httpClient.PostAsync($"{_ipfsServiceURL}/add", imageContent);
 
             if (imageAdditionResponse.IsSuccessStatusCode)
             {
@@ -65,7 +61,7 @@ namespace NFTUploaderWeb.Services.IpfsService
                     { new ByteArrayContent(ipfsMetadataBytes), "Metadata", $"{imageFileName}.json" }
                 };
 
-                var metadataResponse = await _httpClient.PostAsync("/add", ipfsMetadataContent);
+                var metadataResponse = await _httpClient.PostAsync($"{_ipfsServiceURL}/add", ipfsMetadataContent);
 
                 var metadataResponseContent = await metadataResponse.Content.ReadAsStringAsync();
 

@@ -11,6 +11,8 @@ namespace NFTUploaderWeb.Models
         [Required]
         public string TokenName { get; set; }
         [Required]
+        public IFormFile Image { get; set; }
+        [Required]
         public TokenData Token { get; set; }
     }
 }

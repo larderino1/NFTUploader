@@ -1,6 +1,10 @@
+using NFTUploaderWeb.Constants;
 using NFTUploaderWeb.Services.EthereumService;
+using NFTUploaderWeb.Services.ExcelParserService;
 using NFTUploaderWeb.Services.ImageConverter;
 using NFTUploaderWeb.Services.IpfsService;
+using System.Net.Http;
+using System.Text;
 
 namespace NFTUploaderWeb
 {
@@ -15,12 +19,44 @@ namespace NFTUploaderWeb
 
             builder.Services.AddCors();
 
-            builder.Services.AddHttpClient();
+            builder.Services.AddHttpClient("InfuraIPFS", options =>
+            {
+                var key = builder.Configuration[ConfigurationConstants.InfuraIPFSKey];
+                var secret = builder.Configuration[ConfigurationConstants.InfuraIPFSSecret];
+
+                var byteArray = Encoding.UTF8.GetBytes($"{key}:{secret}");
+                var encodedCredentials = Convert.ToBase64String(byteArray);
+
+                options.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedCredentials}");
+            });
+
+            builder.Services.AddHttpClient("InfuraNode", options =>
+            {
+                var key = builder.Configuration[ConfigurationConstants.InfuraApiKey];
+                var secret = builder.Configuration[ConfigurationConstants.InfuraApiSecret];
+
+                var byteArray = Encoding.UTF8.GetBytes($"{key}:{secret}");
+                var encodedCredentials = Convert.ToBase64String(byteArray);
+
+                options.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedCredentials}");
+            });
+
+            builder.Services.AddHttpClient("InfuraNFT_API", options =>
+            {
+                var key = builder.Configuration[ConfigurationConstants.InfuraApiKey];
+                var secret = builder.Configuration[ConfigurationConstants.InfuraApiSecret];
+
+                var byteArray = Encoding.UTF8.GetBytes($"{key}:{secret}");
+                var encodedCredentials = Convert.ToBase64String(byteArray);
+
+                options.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedCredentials}");
+            });
 
             builder.Services
                 .AddScoped<IEthereumService, EthereumService>()
                 .AddScoped<IImageConverter, ImageConverter>()
-                .AddScoped<IIpfsService, IpfsService>();
+                .AddScoped<IIpfsService, IpfsService>()
+                .AddScoped<IExcelParserService, ExcelParserService>();
 
             var app = builder.Build();
 

@@ -6,7 +6,7 @@
 
         public async Task<byte[]> ConvertIFormFileToByteArray(IFormFile file)
         {
-            using var memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
 
             memoryStream.Seek(0, SeekOrigin.Begin);
 

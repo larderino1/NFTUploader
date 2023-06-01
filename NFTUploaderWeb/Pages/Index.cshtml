@@ -3,9 +3,42 @@
 @{
     ViewData["TokenTitle"] = "Home page";
 }
+<link rel="stylesheet" href="./css/collectionImages.css">
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to NFT Generator</h1>
     <p id="currentWalletAddress" class="text-lg text-gray-600 my-2"></p>
+
+    @if(Model.NftCollections != null && 
+        Model.NftCollections.Collections != null && 
+        Model.NftCollections.Collections.Any())
+    {
+        @foreach(var collection in Model.NftCollections.Collections)
+        {
+            <div class="mb-3">
+                <label asp-for="@collection.Name"></label>
+                <p>@collection.Name</p>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@collection.Contract"></label>
+                <p>@collection.Contract</p>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="@collection.CollectionData.Total"></label>
+                <p>@collection.CollectionData.Total</p>
+            </div>
+
+            <div class="gallery">
+                @foreach(var asset in collection.CollectionData.Assets)
+                {
+                    if (asset.Metadata == null)
+                        continue;
+
+                    <img class="img-for-collection" src="@asset.Metadata.Image" alt="" />
+                }
+            </div>
+        }
+    }
 </div>
